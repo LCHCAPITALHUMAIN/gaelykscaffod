@@ -4,10 +4,11 @@ body {
 }
 
 h1 {
-	color: #D33381;
-	border-bottom: black 3px dotted;
+	color: #D33381;	
 }
 
 .error {
 	color: #D33381;
+	font-weight: bold;
+		
 }

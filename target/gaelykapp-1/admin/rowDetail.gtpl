@@ -7,8 +7,7 @@
 				<span>
 				<%
 						def widgetUrl = '/admin/widget/output/'+ request.entityDescriptor.entityStruct[p].typeName +'.gtpl'
-					
-						request['entity'] = entity
+											
 						request['widgetData'] = p
 					%>
 				

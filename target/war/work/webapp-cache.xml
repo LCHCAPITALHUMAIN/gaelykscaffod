@@ -23,6 +23,7 @@
           <string>admin/widget/output/Double.gtpl</string>
           <string>admin/widget/output/Integer.gtpl</string>
           <string>admin/widget/output/String.gtpl</string>
+          <string>admin/widget/output/TimeStamp.gtpl</string>
           <string>css/cupertino/images/ui-anim_basic_16x16.gif</string>
           <string>css/cupertino/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png</string>
           <string>css/cupertino/images/ui-bg_flat_15_cd0a0a_40x100.png</string>
@@ -94,16 +95,10 @@
           <string>WEB-INF/classes/com/kyub/gaelyk/scaffold/validation/ValidationEngine.class</string>
           <string>WEB-INF/classes/com/kyub/gaelyk/scaffold/validation/ValidationResult.class</string>
           <string>WEB-INF/lib/groovy-all-1.7.2.jar</string>
-          <string>WEB-INF/lib/ezmorph-1.0.6.jar</string>
-          <string>WEB-INF/lib/commons-lang-2.4.jar</string>
-          <string>WEB-INF/lib/commons-collections-3.2.1.jar</string>
-          <string>WEB-INF/lib/json-lib-2.3.jar</string>
-          <string>WEB-INF/lib/commons-beanutils-1.8.0.jar</string>
           <string>WEB-INF/lib/gaelyk-0.4.jar</string>
           <string>WEB-INF/lib/gaesitemesh-2.4.1.jar</string>
-          <string>WEB-INF/lib/appengine-api-labs-1.3.3.1.jar</string>
           <string>WEB-INF/lib/appengine-api-1.0-sdk-1.3.3.1.jar</string>
-          <string>WEB-INF/lib/commons-logging-1.1.1.jar</string>
+          <string>WEB-INF/lib/appengine-api-labs-1.3.3.1.jar</string>
         </pathsSet>
       </path-set>
     </entry>
@@ -144,18 +139,6 @@
         <optional>false</optional>
       </dependency>
       <targetFileName>appengine-api-labs-1.3.3.1.jar</targetFileName>
-    </org.apache.maven.plugin.war.util.DependencyInfo>
-    <org.apache.maven.plugin.war.util.DependencyInfo>
-      <dependency>
-        <groupId>net.sf.json-lib</groupId>
-        <artifactId>json-lib</artifactId>
-        <version>2.3</version>
-        <type>jar</type>
-        <scope>compile</scope>
-        <exclusions/>
-        <optional>false</optional>
-      </dependency>
-      <targetFileName>json-lib-2.3.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>

@@ -4,8 +4,7 @@ import com.google.appengine.api.datastore.KeyFactory.Builder;
 import static com.google.appengine.api.datastore.FetchOptions.Builder.*
 import com.kyub.gaelyk.scaffold.conversion.*
 import com.kyub.gaelyk.scaffold.validation.*;
-import net.sf.json.*
-import net.sf.json.groovy.*
+
 
 /*
 println '<h1>HELLO ADMIN  </h1>'
@@ -34,14 +33,19 @@ def ValidationEngine validation = new ValidationEngine()
 
 def pogoDescr = registry.pogoLayouts[params['entityName']]
 
+//def log = new GroovyLogger("adminLogger")
+
+def String destination ="NOTSET";
+
 if(pogoDescr == null){
 	request['message'] = " Entity \'" + params['entityName'] +"\' not found in registry " 
-	forward '/admin/ajaxFail.gtpl'
+	destination= '/admin/ajaxFail.gtpl'
 	
 }else{
 
 request['entityDescriptor'] = pogoDescr
 
+//log.debug("params['actionName']: " +params['actionName'])
 
 switch (params['actionName']){
 	
@@ -50,18 +54,20 @@ switch (params['actionName']){
 		def PreparedQuery preparedQuery = datastore.prepare(query)
 		def entities = preparedQuery.asList( withLimit(25) )
 		request['entities'] = entities		
-		forward '/admin/list.gtpl'		
-	
+		destination= '/admin/list.gtpl'		
+		break
 				
 	case 'ajaxlist':
 		def query = new Query(pogoDescr.entityName)
 		PreparedQuery preparedQuery = datastore.prepare(query)
 		def entities = preparedQuery.asList( withLimit(25) )
 		request['entities'] = entities
-		forward '/admin/listRows.gtpl'
-	
+		destination= '/admin/listRows.gtpl'
+		break
+		
 	case 'create':
-		forward '/admin/create.gtpl'
+		destination= '/admin/create.gtpl'
+		break
 	
 	case 'insert':
 		if(params['ajax'] != null){
@@ -72,7 +78,7 @@ switch (params['actionName']){
 				entity << convRes.convertedVals
 				entity.save()
 				request['message'] = "New " + pogoDescr.entityName +" has been saved with id " + entity.key.id
-				forward '/admin/ajaxSuccess.gtpl'
+				destination= '/admin/ajaxSuccess.gtpl'
 			}else{
 			
 				System.err.println("Errors: " + convRes.getMessages())
@@ -80,11 +86,11 @@ switch (params['actionName']){
 				request['message'] = " Entity \'" + params['entityName'] +"\' Failed to save "
 				request['errors'] = convRes.getMessages()
 				
-				forward '/admin/create.gtpl'
+				destination= '/admin/create.gtpl'
 			
 			}
 		}
-		
+		break
 	case 'delete':
 		
 		if(params['id'] != null){
@@ -94,7 +100,7 @@ switch (params['actionName']){
 			}
 			
 		}
-		println params['id']
+		break
 		
 	case 'detail':
 		
@@ -102,59 +108,62 @@ switch (params['actionName']){
 			def key =  new Builder(pogoDescr.entityName,new Long(params['id'])).getKey()
 			Entity entity = datastore.get(key)
 			request['entity'] = entity
-			forward '/admin/detail.gtpl'
-			
-			
+			destination= '/admin/detail.gtpl'			
 		}
+		break
+		
 	case 'rowDetail':
 		
 		if(params['id'] != null){
 			def key =  new Builder(pogoDescr.entityName ,new Long(params['id'])).getKey()
 			Entity entity = datastore.get(key)
 			request['entity'] = entity
-			forward '/admin/rowDetail.gtpl'
-			
-			
+			destination= '/admin/rowDetail.gtpl'			
 		}
+		break
+		
 	case 'updateForm':
 		
 		if(params['id'] != null){
 			def key =  new Builder(pogoDescr.entityName,new Long(params['id'])).getKey()
 			Entity entity = datastore.get(key)
 			request['entity'] = entity
-			forward '/admin/update.gtpl'			
+			destination= '/admin/update.gtpl'			
 			
 		}
+		break
 		
    case 'update':
    	   if(params['id'] != null){
-	   def key =  new Builder(pogoDescr.entityName,new Long(params['id'])).getKey()
-	   Entity entity = datastore.get(key)
-	 
-	   def convRes = convertion.convert(params,registry.pogos[pogoDescr.entityName])
-	   def validationRes = validation.validate(convRes.convertedVals,registry.pogos[pogoDescr.entityName],convRes)
-	   entity << convRes.convertedVals
-	    if(validationRes.isValid()){
-		    
-	   
-	    datastore.withTransaction {
-		entity.save()   
-		request['message'] = "Updated " + pogoDescr.entityName +" with id " + entity.key.id +" has been saved  "
-		forward '/admin/ajaxSuccess.gtpl'
-	   }
-	   }else{
-	   
-		  
-		   request['entity'] = entity
-		   request['message'] = " Entity \'" + params['entityName'] +"\' Failed to save "
-		   request['errors'] = convRes.getMessages()
+		   def key =  new Builder(pogoDescr.entityName,new Long(params['id'])).getKey()
+		   Entity entity = datastore.get(key)
+		 
+		   def convRes = convertion.convert(params,registry.pogos[pogoDescr.entityName])
+		   def validationRes = validation.validate(convRes.convertedVals,registry.pogos[pogoDescr.entityName],convRes)
+		   entity << convRes.convertedVals
+		    if(validationRes.isValid()){
+			    
 		   
-		   forward '/admin/update.gtpl'
-	   
-	   }
+		    datastore.withTransaction {
+			entity.save()   
+			request['message'] = "Updated " + pogoDescr.entityName +" with id " + entity.key.id +" has been saved  "
+			destination= '/admin/ajaxSuccess.gtpl'
+		   }
+		   }else{
+		   
+			  
+			   request['entity'] = entity
+			   request['message'] = " Entity \'" + params['entityName'] +"\' Failed to save "
+			   request['errors'] = convRes.getMessages()
+			   
+			   destination= '/admin/update.gtpl'
+		   
+		   }
 	  
 	   
-   }
+	   }
+	   break
+	   
    case 'searchSuggest':
 		  def query = new Query(pogoDescr.entityName)
 		  def PreparedQuery preparedQuery = datastore.prepare(query)
@@ -179,7 +188,8 @@ switch (params['actionName']){
 		  
 		  request['results'] = entities
 		  
-		  forward '/admin/searchSuggest.gtpl'
+		  destination= '/admin/searchSuggest.gtpl'
+		  break
 		  
 	case 'search':
 		  def query = new Query(pogoDescr.entityName)
@@ -202,8 +212,12 @@ switch (params['actionName']){
 		 
 		  request['entities'] = entities
 		  
-		  forward '/admin/listRows.gtpl'
+		  destination= '/admin/listRows.gtpl'
+		  break
 		
 	}
 }
+//log.debug("destination: " +destination)
+
+forward destination
 

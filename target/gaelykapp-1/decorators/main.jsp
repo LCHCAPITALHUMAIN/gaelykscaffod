@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <html>
     <head>
-        <title>Gaelyk</title>
+        <title>GaelykScaffold::PizzeRIA</title>
        
         <link rel="shortcut icon" href="/images/gaelyk-small-favicon.png" type="image/png">
         <link rel="icon" href="/images/gaelyk-small-favicon.png" type="image/png">
@@ -15,15 +15,18 @@
     </head>
     <body>
         <div>
-        <!-- 
-            <img src="/images/gaelyk.png">
+         <!--
+            <img src="/images/gaelyk.png" align="left" >
+            
+           
             <img src="/images/google-app-engine-groovy.png" align="right">       
-             -->     
+             -->    
+             <h1>PizzeRIA</h1> 
         </div>
         <div>
 
 
-<h1>Test</h1>
+
 
 <div>
 	<decorator:body />
