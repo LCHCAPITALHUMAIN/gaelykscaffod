@@ -50,36 +50,9 @@ switch (params['actionName']){
 		def PreparedQuery preparedQuery = datastore.prepare(query)
 		def entities = preparedQuery.asList( withLimit(25) )
 		request['entities'] = entities		
-		forward '/admin/list.gtpl'	
-		
-	case 'searchSuggest':
-		def query = new Query(pogoDescr.entityName)
-		def PreparedQuery preparedQuery = datastore.prepare(query)
-		def pEntities = preparedQuery.asList( withLimit(500) )
-		def entities = new LinkedHashSet()
-		def jsonBuilder = new JsonGroovyBuilder()
-		pEntities.each{ entry ->
-			pogoDescr.searchProperties.each {prop ->
-			
-				if(String.valueOf(entry[prop]).indexOf(params.searchparam) > -1){
-					entities.add(entry[prop])
-				}
-			
-			}
-		}
-		def jsonres = jsonBuilder.results {
-			entities.each { entry ->			
-				result {
-						value = entry
-					}
-			}
-		}
-		
-		print jsonres
-		
-		
-		
-		
+		forward '/admin/list.gtpl'		
+	
+				
 	case 'ajaxlist':
 		def query = new Query(pogoDescr.entityName)
 		PreparedQuery preparedQuery = datastore.prepare(query)
@@ -182,7 +155,63 @@ switch (params['actionName']){
 	  
 	   
    }
-		
+   case 'searchSuggest':
+		  def query = new Query(pogoDescr.entityName)
+		  def PreparedQuery preparedQuery = datastore.prepare(query)
+		  def pEntities = preparedQuery.asList( withLimit(500) )
+		  def entities = new LinkedHashSet()
+		  
+		  System.out.println("term " + params.term)
+		  
+		  if(params.term != null){
+		  
+		  pEntities.each{ entry ->
+			  
+			  System.out.println("entry " + entry)
+			  
+			  
+			  pogoDescr.searchProperties.each {prop ->
+				  System.out.println("entry[prop] " + entry[prop])
+				  if(String.valueOf(entry[prop]).indexOf(params.term) > -1){
+					  entities.add(entry[prop])
+				  }
+			  
+			  }
+		  }
+		  }
+		  System.out.println("entities " + entities)
+		  request['results'] = entities
+		  
+		  forward '/admin/searchSuggest.gtpl'
+		  
+	case 'search':
+		  def query = new Query(pogoDescr.entityName)
+		  def PreparedQuery preparedQuery = datastore.prepare(query)
+		  def pEntities = preparedQuery.asList( withLimit(500) )
+		  def entities = new LinkedHashSet()
+		  
+		  System.out.println("term " + params.term)
+		  
+		  if(params.term != null){
+		  
+		  pEntities.each{ entry ->
+			  
+			  System.out.println("entry " + entry)
+			  
+			  
+			  pogoDescr.searchProperties.each {prop ->
+				  System.out.println("entry[prop] " + entry[prop])
+				  if(String.valueOf(entry[prop]).indexOf(params.term) > -1){
+					  entities.add(entry)
+				  }
+			  
+			  }
+		  }
+		  }
+		  System.out.println("entities " + entities)
+		  request['entities'] = entities
+		  
+		  forward '/admin/listRows.gtpl'
 		
 	}
 }

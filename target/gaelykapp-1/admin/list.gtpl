@@ -95,19 +95,31 @@ function showUpdate(id){
 \$(function() {
 
 
+	
 	\$("#search_btn").button({
         icons: {
-            primary: 'ui-icon-plus'
+            primary: 'ui-icon-search'
         }
     }).click(
-    		function() {}
+    		function() {
+
+    			\$('#dataContainer').fadeOut('slow', function() {
+            			
+    			 \$('#dataContainer').load('/adminajax/${request.entityDescriptor.entityName}/search?term='+\$("#searchParam").val(), function() {
+    				 decorateRowButtons();
+    				 \$('#dataContainer').fadeIn('fast');
+        			 });
+
+    			});
+    			 
+        		}
     );
 
 	\$("#searchParam").autocomplete({
 		source: "/adminajax/${request.entityDescriptor.entityName}/searchSuggest",
 		minLength: 2,
-		select: function(event, results) {
-			alert(results.result.value);
+		select: function(event, ui) {
+			//alert(ui.item.value);
 		}
 	});
 	
@@ -155,10 +167,10 @@ function showUpdate(id){
 <body>
 	
 	<div>
-		<form action="/adminajax/${request.entityDescriptor.entityName}/search"></form>
+		
 		<p>
-			<input id="searchParam" name="searchparam" type="text">
-			<button id="search_btn" style="font-size: small;">Search</button>
+			<input id="searchParam" name="searchparam" type="text" class="ui-autocomplete-input" autocomplete="off">
+			<button type="button" id="search_btn" style="font-size: small;">Search</button>
 		</p>
 	</div>
 	

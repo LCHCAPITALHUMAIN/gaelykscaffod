@@ -11,6 +11,7 @@
           <string>admin/list.gtpl</string>
           <string>admin/listRows.gtpl</string>
           <string>admin/rowDetail.gtpl</string>
+          <string>admin/searchSuggest.gtpl</string>
           <string>admin/update.gtpl</string>
           <string>admin/widget/input/Date.gtpl</string>
           <string>admin/widget/input/DateTime.gtpl</string>

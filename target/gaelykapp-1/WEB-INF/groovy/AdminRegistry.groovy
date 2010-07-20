@@ -16,7 +16,7 @@ public class AdminRegistry {
 							'order' : new EntityDescriptor(
 								entityName : 'order',
 								entityStruct : pogos['order'],
-								listProperties:['customerMail','refDate'] , insertProperties:['customerMail','refDate'] ,editProperties:['customerMail','refDate'], detailProperties:['customerMail','refDate','issueDate'] )]
+								listProperties:['customerMail','refDate'] , insertProperties:['customerMail','refDate'] ,editProperties:['customerMail','refDate'], detailProperties:['customerMail','refDate','issueDate'],searchProperties : ['customerMail'] )]
 		
 	
 }
