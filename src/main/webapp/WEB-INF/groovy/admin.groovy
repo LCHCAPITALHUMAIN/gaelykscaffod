@@ -144,7 +144,7 @@ switch (params['actionName']){
 	   }
 	   }else{
 	   
-		   System.err.println("Errors: " + convRes.getMessages())
+		  
 		   request['entity'] = entity
 		   request['message'] = " Entity \'" + params['entityName'] +"\' Failed to save "
 		   request['errors'] = convRes.getMessages()
@@ -161,17 +161,14 @@ switch (params['actionName']){
 		  def pEntities = preparedQuery.asList( withLimit(500) )
 		  def entities = new LinkedHashSet()
 		  
-		  System.out.println("term " + params.term)
+		  
 		  
 		  if(params.term != null){
 		  
-		  pEntities.each{ entry ->
-			  
-			  System.out.println("entry " + entry)
-			  
+		  pEntities.each{ entry ->			  
 			  
 			  pogoDescr.searchProperties.each {prop ->
-				  System.out.println("entry[prop] " + entry[prop])
+				 
 				  if(String.valueOf(entry[prop]).indexOf(params.term) > -1){
 					  entities.add(entry[prop])
 				  }
@@ -179,7 +176,7 @@ switch (params['actionName']){
 			  }
 		  }
 		  }
-		  System.out.println("entities " + entities)
+		  
 		  request['results'] = entities
 		  
 		  forward '/admin/searchSuggest.gtpl'
@@ -189,26 +186,20 @@ switch (params['actionName']){
 		  def PreparedQuery preparedQuery = datastore.prepare(query)
 		  def pEntities = preparedQuery.asList( withLimit(500) )
 		  def entities = new LinkedHashSet()
-		  
-		  System.out.println("term " + params.term)
-		  
+		  		  	  
 		  if(params.term != null){
 		  
 		  pEntities.each{ entry ->
-			  
-			  System.out.println("entry " + entry)
-			  
-			  
+						  
 			  pogoDescr.searchProperties.each {prop ->
-				  System.out.println("entry[prop] " + entry[prop])
+				
 				  if(String.valueOf(entry[prop]).indexOf(params.term) > -1){
 					  entities.add(entry)
 				  }
-			  
 			  }
 		  }
 		  }
-		  System.out.println("entities " + entities)
+		 
 		  request['entities'] = entities
 		  
 		  forward '/admin/listRows.gtpl'
