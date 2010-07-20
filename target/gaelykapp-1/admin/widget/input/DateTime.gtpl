@@ -1,1 +1,0 @@
-<input type="text" name="${request.widgetData}" id="input_${request.widgetData}"  class="dateTimepicker" />
