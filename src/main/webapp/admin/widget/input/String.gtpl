@@ -3,5 +3,5 @@
 	<%if (request.entity != null) {%>${request.entity[request.widgetData]}<%}%>
 	</textarea>
 <% } else { %>
-<input type="text" name="${request.widgetData}" id="input_${request.widgetData}" <% include '/admin/widget/valueAtr.gtpl'%> />
+<input type="text" name="${request.widgetData}" id="input_${request.widgetData}" <% include '/admin/widget/input/valueAtr.gtpl'%> />
 <% } %>

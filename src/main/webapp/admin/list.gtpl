@@ -47,6 +47,7 @@ function deleteEntity(id){
 		\$.ajax({
 			  url: '/adminajax/${request.entityDescriptor.entityName}/delete?id='+id,
 			  success: function(data) {
+				
 				\$('#row_data_'+id).slideUp('slow', function() {
 			    	// Animation complete.
 			  	});
@@ -166,22 +167,22 @@ function showUpdate(id){
 
 <body>
 	
-	<div>
+	<div class="ui-corner-all ui-bordered "	>
 		
-		<p>
-			<input id="searchParam" name="searchparam" type="text" class="ui-autocomplete-input" autocomplete="off">
+		<p >
+			<input id="searchParam" name="searchparam" type="text" class="ui-autocomplete-input " autocomplete="off">
 			<button type="button" id="search_btn" style="font-size: small;">Search</button>
+			<button id="insert_btn" style="font-size: small;">Insert</button>
 		</p>
 	</div>
 	
-	<div>
-		<p><button id="insert_btn" style="font-size: small;">Insert</button></p>
-	</div>
 	
-	<div id="insertFormContainer" style="display: none;">	
+			
+	
+	<div id="insertFormContainer" class="ui-corner-all ui-bordered "	style="display: none;">	
 	
 	</div>
-	<div id="dataContainer">
+	<div id="dataContainer" class="ui-corner-all ui-bordered "	>
 		<% include '/admin/listRows.gtpl' %>
 	</div>
 </body>

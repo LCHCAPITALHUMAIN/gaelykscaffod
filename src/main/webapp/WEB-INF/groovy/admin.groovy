@@ -100,6 +100,8 @@ switch (params['actionName']){
 			}
 			
 		}
+		request['message'] = "Deleted " + pogoDescr.entityName 
+		destination= '/admin/ajaxSuccess.gtpl'
 		break
 		
 	case 'detail':

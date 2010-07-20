@@ -21,7 +21,7 @@
            
             <img src="/images/google-app-engine-groovy.png" align="right">       
              -->    
-             <h1>PizzeRIA</h1> 
+             <h1>GaelykScaffold::PizzeRIA</h1> 
         </div>
         <div>
 
