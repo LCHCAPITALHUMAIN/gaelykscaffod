@@ -1,0 +1,1 @@
+<%if (request.entity != null) {%>${request.entity[request.widgetData]}<%}%>
