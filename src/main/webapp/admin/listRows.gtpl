@@ -5,7 +5,7 @@
 		</span>	
 		<span style="width: 512px">
 		
-			<% request.entityDescriptor.listPropperties.each {p -> %> 
+			<% request.entityDescriptor.listProperties.each {p -> %> 
 				<span>${entity[p]}</span>
 			<% } %>
 		</span>	

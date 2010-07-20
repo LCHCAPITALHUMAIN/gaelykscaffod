@@ -2,6 +2,8 @@ import com.google.appengine.api.datastore.Entity
 import com.google.appengine.api.datastore.*
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 import static com.google.appengine.api.datastore.FetchOptions.Builder.*
+import com.kyub.gaelyk.scaffold.conversion.*
+import com.kyub.gaelyk.scaffold.validation.*;
 
 /*
 println '<h1>HELLO ADMIN  </h1>'
@@ -23,6 +25,10 @@ println '<br/> size: ' + entities.size()
 //MOCK
 
 def AdminRegistry registry = new AdminRegistry()
+
+def ConversionEngine convertion = new ConversionEngine()
+
+def ValidationEngine validation = new ValidationEngine()
 
 def pogoDescr = registry.pogoLayouts[params['entityName']]
 
@@ -57,10 +63,23 @@ switch (params['actionName']){
 	case 'insert':
 		if(params['ajax'] != null){
 			Entity entity = new Entity(pogoDescr.entityName)
-			entity << params
-			entity.save()
-			request['message'] = "New " + pogoDescr.entityName +" has been saved with id " + entity.key.id
-			forward '/admin/ajaxSuccess.gtpl'
+			def convRes = convertion.convert(params,registry.pogos[pogoDescr.entityName])			
+			def validationRes = validation.validate(convRes.convertedVals,registry.pogos[pogoDescr.entityName],convRes)
+			if(validationRes.isValid()){
+				entity << convRes.convertedVals
+				entity.save()
+				request['message'] = "New " + pogoDescr.entityName +" has been saved with id " + entity.key.id
+				forward '/admin/ajaxSuccess.gtpl'
+			}else{
+			
+				System.err.println("Errors: " + convRes.getMessages())
+			
+				request['message'] = " Entity \'" + params['entityName'] +"\' Failed to save "
+				request['errors'] = convRes.getMessages()
+				
+				forward '/admin/create.gtpl'
+			
+			}
 		}
 		
 	case 'delete':
@@ -109,18 +128,28 @@ switch (params['actionName']){
 	   def key =  new Builder(pogoDescr.entityName,new Long(params['id'])).getKey()
 	   Entity entity = datastore.get(key)
 	 
-	   entity << params //TODO only update params
-	  
-	   try{
+	   def convRes = convertion.convert(params,registry.pogos[pogoDescr.entityName])
+	   def validationRes = validation.validate(convRes.convertedVals,registry.pogos[pogoDescr.entityName],convRes)
+	   entity << convRes.convertedVals
+	    if(validationRes.isValid()){
+		    
+	   
 	    datastore.withTransaction {
 		entity.save()   
 		request['message'] = "Updated " + pogoDescr.entityName +" with id " + entity.key.id +" has been saved  "
 		forward '/admin/ajaxSuccess.gtpl'
 	   }
-	   }catch(Exception e){
-	   	   request['entity'] = entity
+	   }else{
+	   
+		   System.err.println("Errors: " + convRes.getMessages())
+		   request['entity'] = entity
+		   request['message'] = " Entity \'" + params['entityName'] +"\' Failed to save "
+		   request['errors'] = convRes.getMessages()
+		   
 		   forward '/admin/update.gtpl'
+	   
 	   }
+	  
 	   
    }
 		

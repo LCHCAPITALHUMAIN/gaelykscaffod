@@ -1,5 +1,9 @@
+<% if(request.message != null){%>
+	<% include '/admin/ajaxFail.gtpl' %>
+<%}%>
+
 <form id="insertForm" method="get" action="/adminajax/${request.entityDescriptor.entityName}/insert">
-		<% request.entityDescriptor.insertPropperties.each {p -> %> 
+		<% request.entityDescriptor.insertProperties.each {p -> %> 
 				<p>
 				<label for="input_${p}">${p}</label>	
 					<%
@@ -9,6 +13,10 @@
 					%>
 				
 					<% include widgetUrl %>
+					
+					<%if (request.errors != null && request.errors[p] != null) { %>
+						<span class="error">${request.errors[p]}</span>
+					<%	} %>
 				</p>
 			<% } %>
 		<input type="submit" value="Save" />

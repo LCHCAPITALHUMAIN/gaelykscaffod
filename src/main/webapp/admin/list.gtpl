@@ -22,6 +22,23 @@ function decorateRowButtons(){
 	
 }
 
+function decorateDate(){
+
+	\$(".datepicker").datepicker({
+		showOn: 'button',
+		buttonImage: '/images/page_go.png',
+		buttonImageOnly: true,
+		dateFormat:'dd/mm/yy'
+	});
+
+	\$(".dateTimepicker").datepicker({
+		showOn: 'button',
+		buttonImage: '/images/page_go.png',
+		buttonImageOnly: true,
+		dateFormat:'dd/mm/yy HH:mm'
+	});
+}
+
 function deleteEntity(id){
 
 	if(confirm('Are you sure?')){
@@ -53,8 +70,12 @@ function showEntity(id){
 function showUpdate(id){
 	
 	 \$('#row_edit_'+id).load('/adminajax/${request.entityDescriptor.entityName}/updateForm?id='+id, function() {
+		 decorateDate()
 		 \$('#updateForm_'+id).ajaxify({    						
 			 'complete': function() {
+			 if( \$('#row_edit_'+id).find('.ui-widget').size() > 0){
+				 decorateDate()
+				 }else{
 			    \$('#row_data_'+id).load('/adminajax/${request.entityDescriptor.entityName}/rowDetail?id='+id, function() {
 			    	decorateRowButtons();
 			    	\$('#row_edit_'+id).fadeOut(1800, function() {
@@ -62,7 +83,8 @@ function showUpdate(id){
 				  		});
 			    });
 				
-	         },
+	         }
+		 	},
 			}); 
 			\$('#row_edit_'+id).slideToggle('slow', function() {
    			// Animation complete.
@@ -73,11 +95,7 @@ function showUpdate(id){
 \$(function() {
 
 
-	\$(".datepicker").datepicker({
-		showOn: 'button',
-		buttonImage: 'images/page_go.png',
-		buttonImageOnly: true
-	});
+	
 
 	
 	\$("#insert_btn").button({
@@ -87,8 +105,10 @@ function showUpdate(id){
     }).click(
     		function() {
     			 \$('#insertFormContainer').load('/adminajax/${request.entityDescriptor.entityName}/create', function() {
-    				\$('#insertForm').ajaxify({    						
+    				 decorateDate();
+     				\$('#insertForm').ajaxify({    						
     						 'complete': function() {
+						 		if( \$('#insertFormContainer').find('.ui-widget').size() > 0){}else{
     						    \$('#dataContainer').load('/adminajax/${request.entityDescriptor.entityName}/ajaxlist', function() {
     						    	decorateRowButtons();
     						    	\$('#insertFormContainer').fadeOut(1800, function() {
@@ -96,7 +116,8 @@ function showUpdate(id){
     							  		});
     						    });
     							
-    				         },
+    				         }
+    				},
     						}); 
     			 	\$('#insertFormContainer').slideToggle('slow', function() {
     				    // Animation complete.

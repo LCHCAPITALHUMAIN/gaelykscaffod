@@ -1,1 +1,1 @@
-<input type="text" name="${request.widgetData}" id="input_${request.widgetData}" />
+<input type="text" name="${request.widgetData}" id="input_${request.widgetData}" <% include '/admin/widget/valueAtr.gtpl'%>/>
