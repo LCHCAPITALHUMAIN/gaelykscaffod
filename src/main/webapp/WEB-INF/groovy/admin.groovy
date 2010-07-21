@@ -3,7 +3,8 @@ import com.google.appengine.api.datastore.*
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 import static com.google.appengine.api.datastore.FetchOptions.Builder.*
 import com.kyub.gaelyk.scaffold.conversion.*
-import com.kyub.gaelyk.scaffold.validation.*;
+import com.kyub.gaelyk.scaffold.validation.*
+import  com.kyub.gaelyk.scaffold.meta.*
 
 
 /*
@@ -27,7 +28,7 @@ println '<br/> size: ' + entities.size()
 
 def AdminRegistry registry = new AdminRegistry()
 
-def ConversionEngine convertion = new ConversionEngine()
+def ConversionEngine convertion = new ConversionEngine(datastore)
 
 def ValidationEngine validation = new ValidationEngine()
 
@@ -59,13 +60,25 @@ switch (params['actionName']){
 				
 	case 'ajaxlist':
 		def query = new Query(pogoDescr.entityName)
-		PreparedQuery preparedQuery = datastore.prepare(query)
+		def PreparedQuery preparedQuery = datastore.prepare(query)
 		def entities = preparedQuery.asList( withLimit(25) )
 		request['entities'] = entities
 		destination= '/admin/listRows.gtpl'
 		break
 		
 	case 'create':
+		pogoDescr.entityStruct.each() { key, value -> 
+			if(value instanceof RelationDescriptor){
+				System.out.println("value.targetPogo: " + value.targetPogo)
+				def query = new Query(value.targetPogo)
+				def PreparedQuery preparedQuery = datastore.prepare(query)
+				System.out.println("query: " +query.toString())
+				def entities = preparedQuery.asList(withLimit(250))
+				request[key+'_entities_4_'+pogoDescr.entityName] = entities		
+				System.out.println("key: " + key+'_entities_4_'+pogoDescr.entityName)
+			}
+			
+			}
 		destination= '/admin/create.gtpl'
 		break
 	

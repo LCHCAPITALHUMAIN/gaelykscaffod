@@ -3,9 +3,11 @@ package com.kyub.gaelyk.scaffold.meta;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("rawtypes")
 public class EntityDescriptor {
 	
 	public String entityName ;
+	
 	
 	public Map entityStruct;
 	

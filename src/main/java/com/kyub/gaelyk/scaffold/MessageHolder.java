@@ -5,13 +5,13 @@ import java.util.Map;
 
 public abstract class MessageHolder {
 	
-   protected Map messages= new HashMap();	
+   protected Map<String,String> messages= new HashMap<String,String>();	
 	
 	public Object add(String fieldName, String message) {
 		return messages.put(fieldName, message);
 	}
 
-	public Map getMessages() {
+	public Map<String,String> getMessages() {
 		return messages; //TODO unmodificable map??
 	}
 	

@@ -1,11 +1,12 @@
 package com.kyub.gaelyk.scaffold.conversion.converters;
 
 import com.kyub.gaelyk.scaffold.conversion.Converter;
+import com.kyub.gaelyk.scaffold.meta.FieldDescriptor;
 
-public class StringConverter extends Converter {
+public class StringConverter extends Converter<String> {
 
 	@Override
-	public Object convert(Object p) throws Exception {
+	public String convert(Object p, FieldDescriptor dsr) throws Exception {
 		
 		return String.valueOf(p);
 	}

@@ -4,29 +4,29 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.google.appengine.api.datastore.Entity;
+
 import com.kyub.gaelyk.scaffold.MessageHolder;
 import com.kyub.gaelyk.scaffold.meta.FieldDescriptor;
 
 public class ValidationEngine {
 	
-	public ValidationResult validate(Map pogoVals, Map pogoDescr){		
+	public ValidationResult validate(Map<String,String> pogoVals, Map<String,FieldDescriptor> pogoDescr){		
 		ValidationResult result = new ValidationResult();
 		return validate(pogoVals, pogoDescr, result);
 	}
 
-	public ValidationResult validate(Map pogoVals, Map pogoDescr,	MessageHolder result) {
+	public ValidationResult validate(Map<String,String> pogoVals, Map<String,FieldDescriptor> pogoDescr,	MessageHolder result) {
 		System.out.println(" *************** Validation: \n "+ pogoVals + " " + pogoDescr);
-		Iterator iterator = pogoDescr.entrySet().iterator();
+		Iterator<Entry<String,FieldDescriptor>> iterator = pogoDescr.entrySet().iterator();
 		while (iterator.hasNext()) {
-			Entry entry = (Entry) iterator.next();
-			FieldDescriptor dsr = (FieldDescriptor) entry.getValue();
+			Entry<String,FieldDescriptor> entry =  iterator.next();
+			FieldDescriptor dsr =  entry.getValue();
 			String propName = entry.getKey().toString();
 		
-			System.out.println(propName + " " +pogoVals.get(propName));
+			System.out.println(propName + " " +String.valueOf(pogoVals.get(propName)));
 			
 			if(pogoVals.containsKey(propName) ){
-				if(pogoVals.get(propName) != null &&pogoVals.get(propName).toString().trim().length() > 0){
+				if(pogoVals.get(propName) != null && String.valueOf(pogoVals.get(propName)).trim().length() > 0){
 						//TODO extravalidation	
 					System.err.println("***VALISDATION SHOUD OCCUR! ");
 				}else{

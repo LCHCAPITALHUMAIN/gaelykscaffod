@@ -1,11 +1,12 @@
 package com.kyub.gaelyk.scaffold.conversion.converters;
 
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
+
 
 import com.kyub.gaelyk.scaffold.conversion.Converter;
+import com.kyub.gaelyk.scaffold.meta.FieldDescriptor;
 
 public class DateConverter extends Converter<Date> {
 	
@@ -13,7 +14,7 @@ public class DateConverter extends Converter<Date> {
 	
 
 	@Override
-	public Date convert(Object p) throws Exception {		
+	public Date convert(Object p, FieldDescriptor dsr) throws Exception {		
 		
 		return shortFormat.parse(p.toString());
 	}

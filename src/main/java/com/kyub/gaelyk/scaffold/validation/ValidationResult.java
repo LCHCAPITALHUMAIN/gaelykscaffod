@@ -1,6 +1,6 @@
 package com.kyub.gaelyk.scaffold.validation;
 
-import java.util.HashMap;
+
 import java.util.Map;
 
 import com.kyub.gaelyk.scaffold.MessageHolder;
@@ -11,7 +11,7 @@ public class ValidationResult extends MessageHolder{
 		super();				
 	}
 
-	public ValidationResult(Map messages) {
+	public ValidationResult(Map<String,String> messages) {
 		super();
 		this.messages = messages;
 		
