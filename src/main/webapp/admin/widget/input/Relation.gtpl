@@ -1,7 +1,7 @@
 
 <select name="${request.widgetData}">
 
-<% def items = request[request.widgetData+'_entities_4_'+request.entityDescriptor.entityName]
+<% def items = request[request.widgetData+'_entities_4_'+request.entityDescriptor.scaffoldName]
 	items.each { item ->
 	
 %>

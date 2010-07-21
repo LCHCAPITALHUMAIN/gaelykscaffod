@@ -2,7 +2,7 @@
 	<% include '/admin/ajaxFail.gtpl' %>
 <%}%>
 
-<form id="insertForm" method="get" action="/adminajax/${request.entityDescriptor.entityName}/insert">
+<form id="insertForm" method="get" action="/adminajax/${request.entityDescriptor.scaffoldName}/insert">
 		<% request.entityDescriptor.insertProperties.each {p -> %> 
 				<p>
 				<label for="input_${p}">${p}</label>	

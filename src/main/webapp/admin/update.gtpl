@@ -2,7 +2,7 @@
 	<% include '/admin/ajaxFail.gtpl' %>
 <%}%>
 
-<form id="updateForm_${request.entity.key.id}" method="get" action="/adminajax/${request.entityDescriptor.entityName}/update">
+<form id="updateForm_${request.entity.id}" method="get" action="/adminajax/${request.entityDescriptor.scaffoldName}/update">
 		<% request.entityDescriptor.editProperties.each {p -> %> 
 				<p>
 				<label for="input_${p}">${p}</label>	
@@ -19,6 +19,6 @@
 					<%	} %>
 				</p>
 			<% } %>
-		<input type="hidden" value="${request.entity.key.id}" name="id"/>	
+		<input type="hidden" value="${request.entity.id}" name="id"/>	
 		<input type="submit" value="Save" />
 		</form>

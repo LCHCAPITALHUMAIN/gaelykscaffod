@@ -20,5 +20,14 @@ public class EntityDescriptor {
 	public List insertProperties ;
 	
 	public List editProperties ;
+	
+	
+	public Class getEntityClass() throws Exception{
+		if(entityName == null){
+			throw new IllegalStateException("entityName not set");
+		}
+		return Class.forName(entityName);
+		
+	}
 
 }

@@ -45,7 +45,7 @@ function deleteEntity(id){
 
 
 		\$.ajax({
-			  url: '/adminajax/${request.entityDescriptor.entityName}/delete?id='+id,
+			  url: '/adminajax/${request.entityDescriptor.scaffoldName}/delete?id='+id,
 			  success: function(data) {
 				
 				\$('#row_data_'+id).slideUp('slow', function() {
@@ -62,7 +62,7 @@ function deleteEntity(id){
 
 function showEntity(id){
 	
-	 \$('#row_detail_'+id).load('/adminajax/${request.entityDescriptor.entityName}/detail?id='+id, function() {
+	 \$('#row_detail_'+id).load('/adminajax/${request.entityDescriptor.scaffoldName}/detail?id='+id, function() {
 			\$('#row_detail_'+id).slideToggle('slow', function() {
     			// Animation complete.
   			});
@@ -70,14 +70,14 @@ function showEntity(id){
 }
 function showUpdate(id){
 	
-	 \$('#row_edit_'+id).load('/adminajax/${request.entityDescriptor.entityName}/updateForm?id='+id, function() {
+	 \$('#row_edit_'+id).load('/adminajax/${request.entityDescriptor.scaffoldName}/updateForm?id='+id, function() {
 		 decorateDate()
 		 \$('#updateForm_'+id).ajaxify({    						
 			 'complete': function() {
 			 if( \$('#row_edit_'+id).find('.ui-widget').size() > 0){
 				 decorateDate()
 				 }else{
-			    \$('#row_data_'+id).load('/adminajax/${request.entityDescriptor.entityName}/rowDetail?id='+id, function() {
+			    \$('#row_data_'+id).load('/adminajax/${request.entityDescriptor.scaffoldName}/rowDetail?id='+id, function() {
 			    	decorateRowButtons();
 			    	\$('#row_edit_'+id).fadeOut(1800, function() {
 				    	// Animation complete.
@@ -106,7 +106,7 @@ function showUpdate(id){
 
     			\$('#dataContainer').fadeOut('slow', function() {
             			
-    			 \$('#dataContainer').load('/adminajax/${request.entityDescriptor.entityName}/search?term='+\$("#searchParam").val(), function() {
+    			 \$('#dataContainer').load('/adminajax/${request.entityDescriptor.scaffoldName}/search?term='+\$("#searchParam").val(), function() {
     				 decorateRowButtons();
     				 \$('#dataContainer').fadeIn('fast');
         			 });
@@ -117,7 +117,7 @@ function showUpdate(id){
     );
 
 	\$("#searchParam").autocomplete({
-		source: "/adminajax/${request.entityDescriptor.entityName}/searchSuggest",
+		source: "/adminajax/${request.entityDescriptor.scaffoldName}/searchSuggest",
 		minLength: 2,
 		select: function(event, ui) {
 			//alert(ui.item.value);
@@ -132,12 +132,12 @@ function showUpdate(id){
         }
     }).click(
     		function() {
-    			 \$('#insertFormContainer').load('/adminajax/${request.entityDescriptor.entityName}/create', function() {
+    			 \$('#insertFormContainer').load('/adminajax/${request.entityDescriptor.scaffoldName}/create', function() {
     				 decorateDate();
      				\$('#insertForm').ajaxify({    						
     						 'complete': function() {
 						 		if( \$('#insertFormContainer').find('.ui-widget').size() > 0){}else{
-    						    \$('#dataContainer').load('/adminajax/${request.entityDescriptor.entityName}/ajaxlist', function() {
+    						    \$('#dataContainer').load('/adminajax/${request.entityDescriptor.scaffoldName}/ajaxlist', function() {
     						    	decorateRowButtons();
     						    	\$('#insertFormContainer').fadeOut(1800, function() {
     							    	// Animation complete.
