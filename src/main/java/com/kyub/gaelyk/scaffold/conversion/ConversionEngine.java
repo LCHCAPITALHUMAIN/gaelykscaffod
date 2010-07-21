@@ -25,13 +25,13 @@ public class ConversionEngine {
 	
 	
 	
-	public ConversionEngine(DatastoreService datastore) {
+	public ConversionEngine() {
 	
 		converters = new HashMap<String, Converter>();
 		converters.put("String", new StringConverter());
 		converters.put("Double", new DoubleConverter());
 		converters.put("Date", new DateConverter());
-		converters.put("Relation", new RelationConverter(datastore));
+		converters.put("Relation", new RelationConverter());
 		
 		defaulters  = new HashMap<String, Converter>();
 		

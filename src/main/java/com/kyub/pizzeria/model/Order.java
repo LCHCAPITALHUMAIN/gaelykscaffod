@@ -4,12 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Id;
 
+import com.googlecode.objectify.Key;
+
 public class Order {
 	
-	@Id Long id;
-	String customarMail;
-	Date dataRef;
-	Date issueDate;
+	@Id 
+	public Long id;
+	public String customerMail;
+	public Date dataRef;
+	public Date issueDate;
+	public Key<Pizza> desiredPizza;
 	
 	
 	

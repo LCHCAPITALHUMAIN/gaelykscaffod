@@ -30,7 +30,7 @@ println '<br/> size: ' + entities.size()
 
 
 
-def ConversionEngine convertion = new ConversionEngine(datastore)
+def ConversionEngine convertion = new ConversionEngine()
 
 def ValidationEngine validation = new ValidationEngine()
 
@@ -73,8 +73,8 @@ switch (params['actionName']){
 		pogoDescr.entityStruct.each() { key, value -> 
 			if(value instanceof RelationDescriptor){
 				System.out.println("value.targetPogo: " + value.targetPogo)
-				def entities = ofy.query(value.targetPogo)
-				request[key+'_entities_4_'+pogoDescr.entityName] = entities		
+				def entities = ofy.query(Class.forName(value.targetPogo))
+				request[key+'_entities_4_'+pogoDescr.scaffoldName] = entities		
 				
 			}
 			
@@ -88,7 +88,7 @@ switch (params['actionName']){
 			def convRes = convertion.convert(params,pogoDescr.entityStruct)			
 			def validationRes = validation.validate(convRes.convertedVals,pogoDescr.entityStruct,convRes)
 			convRes.convertedVals.each {key , value ->
-				log.info('prop ' + key + ' ' + entity.price)
+				
 				entity[key] = value
 				
 				}
@@ -140,6 +140,17 @@ switch (params['actionName']){
 	case 'updateForm':
 		
 		if(params['id'] != null){
+			
+			pogoDescr.entityStruct.each() { key, value ->
+				if(value instanceof RelationDescriptor){
+					System.out.println("value.targetPogo: " + value.targetPogo)
+					def entities = ofy.query(Class.forName(value.targetPogo))
+					request[key+'_entities_4_'+pogoDescr.scaffoldName] = entities
+					
+				}
+				
+				}
+			
 			def entity = ofy.get(pogoDescr.getEntityClass(),new Long(params['id']))
 			request['entity'] = entity
 			destination= '/admin/update.gtpl'			
@@ -153,7 +164,7 @@ switch (params['actionName']){
 			def convRes = convertion.convert(params,pogoDescr.entityStruct.subMap(pogoDescr.editProperties)	)		
 			def validationRes = validation.validate(convRes.convertedVals,pogoDescr.entityStruct,convRes)
 			convRes.convertedVals.each {key , value ->
-				log.info('prop ' + key + ' ' + entity.price)
+				log.info('prop ' + key )
 				entity[key] = value
 				
 				}

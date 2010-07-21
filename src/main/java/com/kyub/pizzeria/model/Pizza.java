@@ -13,4 +13,11 @@ public class Pizza {
 	
 	public String description;
 
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	
+
 }
