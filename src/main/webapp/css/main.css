@@ -21,3 +21,27 @@ h1 {
 .pseudoTd {
 	float: left;
 }
+
+.table-row {background: #FFC none;
+			border: 1px solid black;
+			color: black;
+			margin-bottom: 0px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 0px;
+			padding: 0px;
+			text-align: center;
+			width: 96%;
+}
+.table-cell {border: none;
+			float: left;
+			margin: 0px;
+			padding: 0px;
+			width: 20%;
+}
+.table-clear {
+				clear: both;
+				margin: 0px;
+				padding: 0px;
+				width: auto;
+}

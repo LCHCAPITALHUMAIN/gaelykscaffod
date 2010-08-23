@@ -1,5 +1,6 @@
+<!-- 
 <div id="row_header" style="width: 1024px; clear: both; margin-bottom: 12px; "> 
-<div style="width: 762px; float: left;">
+<div>
 		<div style=" float: left; width: 32px; text-align: center; font-weight: bold;">
 			ID
 		</div>	
@@ -11,15 +12,14 @@
 				
 </div>
 </div>
+-->
 <% request.entities.each { entity -> %>
-	<div id="row_data_${entity.id}" style="width: 1024px;"> 
-	    
-		<div style="width: 762px; float: left;">
-		<div style=" float: left; width: 32px; text-align: center; font-weight: bold;">
+	<div id="row_data_${entity.id}" class="table-row"> 		
+		<div style="font-weight: bold;" class="table-cell">
 			${entity.id}
 		</div>	
 			<% request.entityDescriptor.listProperties.each {p -> %> 
-				<div style="float: left; margin-left: 12px; width: 240px;">
+				<div class="table-cell">
 					<%
 						def widgetUrl = '/admin/widget/output/'+ request.entityDescriptor.entityStruct[p].typeName +'.gtpl'
 					
@@ -30,8 +30,8 @@
 					<% include widgetUrl %>
 				</div>
 			<% } %>
-		</div>	
-		<div style="width: 256px; float: right;">
+		
+		<div class="table-cell">
 		<span >
 			<button id="detail_${entity.id}" style="font-size: small;" class="detailBtn" onclick="showEntity('${entity.id}')">Detail</button>
 		</span>	
@@ -44,7 +44,8 @@
 		</span>	
 		</div>
 	</div>
-	<div style="clear: both;"> &nbsp;</div>
+	
+	<div class="table-clear"> &nbsp;</div>
 	
 	<div id="row_detail_${entity.id}" style="display: none;">
 	Unloaded Detail

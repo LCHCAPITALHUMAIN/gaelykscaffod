@@ -9,24 +9,7 @@ import  com.kyub.gaelyk.scaffold.*
 import com.googlecode.objectify.*
 
 
-/*
-println '<h1>HELLO ADMIN  </h1>'
-println params['actionName'] + ' 4 ' + params['entityName']
 
-Entity entity = new Entity(params['entityName'])
-
-// subscript notation, like when accessing a map
-entity['name'] = "Guillaume Laforge at " + new Date().toString()
-entity.save()
-
-def query = new Query(params['entityName'])
-PreparedQuery preparedQuery = datastore.prepare(query)
-def entities = preparedQuery.asList( withLimit(10) )
-
-println '<br/> size: ' + entities.size()
-*/
-
-//MOCK
 
 
 
