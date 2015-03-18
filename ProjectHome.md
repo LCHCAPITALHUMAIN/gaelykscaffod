@@ -1,0 +1,1 @@
+Ria Scafolding plugin for Gaelyk for simple crud operations
